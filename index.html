@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
+<title>Love Story Magazine — Badhon & Nezam </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500;1,700&display=swap" rel="stylesheet">
+<link rel="preload" href="./cover.jpg" as="image">
+<style>
+:root{
+  --gold1:#f6e0aa; --gold2:#cf9f58; --gold3:#8a6431;
+  --red:#b3121f; --red-deep:#8a0c17;
+  --paper:#eddcb9; --ink:#241711;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --hand:'Caveat','Segoe Script',cursive;
+  --script:'Great Vibes','Brush Script MT',cursive;
+  --block:'Anton',Impact,sans-serif;
+  /* Fallback only. The head script below replaces this with a tiny pre-rendered PNG tile
+     (decoded once and shared) because live feTurbulence SVG is very expensive to rasterize. */
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .1 0 0 0 .38 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --hearts:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 33 C9 23 11 13 17.5 13 C20 13 22 15 22 16.5 C22 15 24 13 26.5 13 C33 13 35 23 22 33Z' fill='white' fill-opacity='.2'/%3E%3C/svg%3E");
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html, body {
+  width: 100%;
+  min-height: 100%;
+  overflow: auto;
+  background: #2b180b;
+  touch-action: auto;
+  overscroll-behavior-x: contain;
+  -webkit-tap-highlight-color: transparent;
+}
+body{font-family:var(--serif);color:var(--ink);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+
+/* ---------- table ---------- */
+.table{position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 38% 34% at 9% 4%, rgba(255,205,120,.65), rgba(255,170,70,.18) 55%, transparent 100%),
+    radial-gradient(ellipse at 50% 55%, transparent 35%, rgba(0,0,0,.72) 100%),
+    repeating-linear-gradient(93deg, rgba(0,0,0,.10) 0 2px, transparent 2px 11px, rgba(255,200,130,.04) 11px 13px, transparent 13px 26px),
+    linear-gradient(100deg,#5a3317,#3d2210 45%,#55301a 70%,#331c0d);
+}
+.table::after{content:"";position:absolute;inset:0;background:var(--noise);background-size:128px 128px;opacity:.32}
+.lamp{position:absolute;left:1.5vw;top:-1vw;width:min(15vw,150px);aspect-ratio:1/.72;pointer-events:none}
+.lamp i{position:absolute;display:block}
+.lamp .shade{left:0;right:0;top:0;height:52%;border-radius:0 0 46% 46%/0 0 100% 100%;background:radial-gradient(ellipse at 40% 80%,#fff6dc,#f2d79a 60%,#caa060);box-shadow:0 0 60px 30px rgba(255,200,110,.5)}
+.lamp .neck{left:42%;width:16%;top:50%;height:16%;background:linear-gradient(90deg,#7a5a24,#d8b36a,#7a5a24)}
+.lamp .base{left:22%;width:56%;top:64%;height:34%;border-radius:50% 50% 40% 40%;background:radial-gradient(circle at 35% 30%,#f3d68a,#a67c30 60%,#5e4416)}
+
+/* ---------- stage ---------- */
+.stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 2600px;
+  perspective-origin: 50% 35%;
+  touch-action: pan-y pinch-zoom;
+  cursor: grab;
+}
+
+.book {
+  touch-action: pan-y pinch-zoom;
+}
+.stage.drag{cursor:grabbing}
+.book{--w:420px;--n:14;position:relative;width:calc(var(--w)*2);height:calc(var(--w)*1.3333);transform-style:preserve-3d;will-change:transform}
+.bookshadow{position:absolute;left:50%;top:50%;width:calc(var(--w)*1);height:calc(var(--w)*1.24);
+  background:radial-gradient(ellipse closest-side,rgba(0,0,0,.66) 72%,rgba(0,0,0,0));
+  transform:translateZ(-2px) translate(0,3%);pointer-events:none}
+.leaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d}
+.face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;font-size:calc(var(--w)*.04);line-height:1.25}
+.face.back{transform:rotateY(180deg)}
+.face::before{content:"";position:absolute;inset:0;background:var(--noise);background-size:128px 128px;pointer-events:none;z-index:50;opacity:.5}
+.face::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:51;
+  background:linear-gradient(90deg,rgba(0,0,0,.38),rgba(0,0,0,.05) 7%,transparent 14%, transparent 92%, rgba(0,0,0,.12))}
+.face.back::after{background:linear-gradient(270deg,rgba(0,0,0,.38),rgba(0,0,0,.05) 7%,transparent 14%, transparent 92%, rgba(0,0,0,.12))}
+.dim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:60}
+.front{border-radius:0 .5em .5em 0;box-shadow:0 0 .6em rgba(0,0,0,.4)}
+.back{border-radius:.5em 0 0 .5em}
+
+/* ---------- REAL PAGE BEND: segmented strips (painted only while a page is turning) ----------
+   PERF: the strips stay in the tree once built but use visibility (not display) so their layout is
+   already computed and the first frame of a turn only has to paint, instead of laying out ~28 page clones. */
+.leaf>.strips{position:absolute;inset:0;display:block;visibility:hidden;transform-style:preserve-3d;pointer-events:none}
+.leaf.bending>.strips{visibility:visible}
+.leaf.bending>.face{visibility:hidden}
+.seg{position:absolute;top:0;left:0;height:100%;width:calc(var(--w)/var(--n) + .75px);transform-origin:left center;transform-style:preserve-3d}
+.seg>.seg{left:calc(var(--w)/var(--n))}
+.lay{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.lay.b{transform:rotateY(180deg)}
+.lay .face.face{inset:auto;top:0;right:auto;bottom:auto;height:100%;width:var(--w);transform:none;backface-visibility:visible;-webkit-backface-visibility:visible;border-radius:0;box-shadow:none;
+  left:calc(var(--w)*-1*var(--i)/var(--n))}
+.lay.b .face.face{left:calc(var(--w)*-1*var(--j)/var(--n) + .75px)}
+/* will-change:opacity keeps per-frame shading changes on the compositor (no repaint of the page clone underneath) */
+.sh,.hl{position:absolute;inset:0;pointer-events:none;opacity:0;will-change:opacity}
+.sh{background:#1a0e07;z-index:70}
+.hl{background:#fff8e8;z-index:71}
+/* lowest quality tier: skip the grain overlay on the bending strips (flat pages keep it) */
+html.nn .lay .face::before{display:none}
+.cast{position:absolute;top:0;height:100%;width:var(--w);pointer-events:none;display:none}
+.cast.r{left:50%;transform-origin:left center;background:linear-gradient(90deg,rgba(20,8,0,.18),rgba(20,8,0,.6) 76%,rgba(20,8,0,0))}
+.cast.l{left:0;transform-origin:right center;background:linear-gradient(270deg,rgba(20,8,0,.18),rgba(20,8,0,.6) 76%,rgba(20,8,0,0))}
+
+/* ---------- shared page styles ---------- */
+.aged{background:radial-gradient(ellipse at 30% 20%,#f5e8c8,#e5d0a4 70%,#d6bd8c)}
+.cream{background:radial-gradient(ellipse at 50% 30%,#f7ecd3,#ecdcb7 80%)}
+.red{background:var(--hearts),radial-gradient(ellipse at 50% 20%,#c8202c,#a50f1b 75%,#7f0912)}
+.redplain{background:radial-gradient(ellipse at 50% 20%,#c8202c,#a50f1b 75%,#7f0912)}
+.pad{padding:2.2em 2em}
+.pg{position:absolute;bottom:1em;font-family:var(--serif);font-weight:700;font-size:.9em;z-index:5}
+.pg.l{left:1.6em}.pg.r{right:1.6em}
+
+/* photo slots */
+.ph{position:relative;overflow:hidden;background-size:cover;background-position:center;cursor:pointer}
+.ph svg{position:absolute;inset:0;width:100%;height:100%}
+.ph .hint{position:absolute;left:50%;bottom:.55em;transform:translateX(-50%);white-space:nowrap;font:700 .62em/1 var(--serif);letter-spacing:.06em;padding:.45em .8em;border-radius:2em;background:rgba(0,0,0,.55);color:#fff;opacity:.85;transition:opacity .2s;z-index:3}
+.ph:hover .hint{opacity:1}
+.ph.has .hint,.ph.has svg{display:none}
+.ph .cap{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font:700 .62em/1.2 var(--serif);color:rgba(255,255,255,.9);z-index:2;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.art-couple{background:radial-gradient(ellipse at 55% 25%,#6a4a36,#2b1a12 55%,#100a07)}
+.art-man{background:linear-gradient(160deg,#79b2c9,#4a86a3)}
+.art-sunset{background:linear-gradient(#3a2a5c,#d8584a 55%,#f7b24a)}
+.art-door{background:linear-gradient(#d8c8a8,#b7a283)}
+.art-cup{background:linear-gradient(135deg,#8b5a3c,#5a3420)}
+.art-heart{background:linear-gradient(135deg,#b64a58,#7f1f33)}
+.art-self{background:linear-gradient(135deg,#e0a46a,#b4623a)}
+.art-trad{background:radial-gradient(ellipse at 50% 25%,#e4b24f,#a1561f 60%,#4a2410)}
+
+/* ---------- COVER ---------- */
+.cover{background:#120b08;color:#fff}
+.cover .photo{position:absolute;inset:0;border-radius:0}
+.cover .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent 28%,transparent 60%,rgba(0,0,0,.6));z-index:2;pointer-events:none}
+.gold{background:linear-gradient(180deg,var(--gold1) 10%,var(--gold2) 55%,var(--gold3));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.cover h1{position:absolute;left:0;right:0;top:.55em;text-align:center;font:500 3.55em/1 var(--serif);letter-spacing:.01em;z-index:5;pointer-events:none}
+.cover .mag{position:absolute;right:1.4em;top:4.5em;font:500 .85em/1 var(--serif);letter-spacing:.14em;z-index:5;pointer-events:none}
+.cover .lines{position:absolute;left:1.7em;bottom:2.4em;width:9em;z-index:5;font:700 .72em/1.35 var(--serif);letter-spacing:.06em;color:#f1e2c0;text-transform:uppercase;pointer-events:none}
+.cover .lines p{margin-bottom:1.15em}
+.cover .feat{position:absolute;right:1.4em;bottom:2.2em;text-align:center;z-index:5;pointer-events:none}
+.cover .feat small{display:block;font:italic 500 .95em/1 var(--serif);color:var(--gold1);margin-bottom:.1em}
+.cover .feat b{display:block;font:400 2.1em/.95em var(--script)}
+
+/* ---------- SPREAD 1 ---------- */
+.who h2{font:900 2.35em/.95 var(--serif);text-transform:uppercase;letter-spacing:-.01em;margin:.1em 0 .5em;position:relative;z-index:2}
+.who h2 span{display:block;color:var(--red)}
+.who .frame{width:80%;margin:0 auto;aspect-ratio:4/5;border:.4em solid #1b1210;box-shadow:.3em .4em 0 rgba(0,0,0,.25);transform:rotate(-2deg);background:#fff}
+.who .frame .ph{position:absolute;inset:0}
+.who .fav{position:absolute;right:1.4em;bottom:2.2em;font:700 2.1em/1 var(--hand);color:var(--red);transform:rotate(-5deg);text-shadow:0 0 .3em rgba(255,255,255,.4)}
+.letter{position:absolute;left:1.9em;right:1.9em;top:2.4em;bottom:2.6em;background:radial-gradient(ellipse at 50% 20%,#fbf1da,#f0e0bd);
+  border:.2em solid #c19a5c;outline:.1em solid #c19a5c;outline-offset:-.6em;box-shadow:0 .3em 1em rgba(0,0,0,.4);padding:1.5em 1.4em;text-align:center;z-index:3}
+.letter h3{font:900 1.45em/1 var(--serif);letter-spacing:.14em;color:var(--red);margin:.2em 0 .6em}
+.letter p{font:500 1.18em/1.18 var(--hand);color:#3b2a20;text-align:left;margin-bottom:.55em}
+.letter .sign{font:400 1.9em/1 var(--script);color:var(--red);text-align:right;margin-top:.1em}
+.bow{position:absolute;left:-1.6em;top:-1.5em;width:5.2em;z-index:6;filter:drop-shadow(0 .2em .2em rgba(0,0,0,.35))}
+.env{position:absolute;right:-.7em;top:-.9em;width:2.8em;z-index:6;transform:rotate(10deg);filter:drop-shadow(0 .15em .15em rgba(0,0,0,.35))}
+
+/* ---------- SPREAD 2 ---------- */
+.ten{color:#fff}
+.top{display:flex;gap:1.2em;align-items:flex-start;margin-bottom:1.3em}
+.polaroid{position:relative;width:52%;background:#fbf8f0;padding:.55em .55em 2em;box-shadow:0 .3em .8em rgba(0,0,0,.45);transform:rotate(-4deg);flex:none}
+.polaroid .ph{aspect-ratio:1/1}
+.polaroid em{position:absolute;left:0;right:0;bottom:.35em;text-align:center;font:700 1.05em/1 var(--hand);color:#3a2b22}
+.tape{position:absolute;width:4.2em;height:1.4em;background:rgba(244,236,214,.72);box-shadow:0 .05em .2em rgba(0,0,0,.25);z-index:4}
+.ten h2{font:900 1.9em/1 var(--serif);text-transform:uppercase;margin-top:.8em;letter-spacing:-.005em}
+.ten h2 small{display:block;font:500 .5em/1.2 var(--hand);text-transform:none;margin-top:.5em;opacity:.9;letter-spacing:.02em}
+.items{list-style:none;position:relative;z-index:2}
+.items li{position:relative;display:flex;gap:.9em;align-items:center;margin-bottom:.95em;font:500 .98em/1.28 var(--serif)}
+.items li::before{content:"";position:absolute;left:-.5em;top:-.3em;width:3.4em;height:calc(100% + .6em);background:rgba(244,236,214,.2);transform:rotate(-2deg);z-index:-1}
+.num{flex:none;width:2.3em;height:2.3em;display:grid;place-items:center;border-radius:50%;font:900 1.35em/1 var(--serif);
+  background:conic-gradient(from 20deg,#f4f5f7,#8e949b,#fff,#a5abb2,#f4f5f7);color:#4a4f55;box-shadow:0 .1em .35em rgba(0,0,0,.45),inset 0 0 0 .08em rgba(255,255,255,.7);text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.items li.last{font-style:italic;font-weight:700;font-size:1.05em}
+
+/* ---------- SPREAD 3 ---------- */
+.collage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr .78fr 1fr;gap:1.1em;height:100%;padding:2em 1.8em 2.2em}
+.pol{position:relative;background:#fffdf6;padding:.4em .4em 1.5em;box-shadow:0 .25em .6em rgba(0,0,0,.35)}
+.pol .ph{position:absolute;left:.4em;right:.4em;top:.4em;bottom:1.5em}
+.pol em{position:absolute;left:0;right:0;bottom:.3em;text-align:center;font:700 .95em/1 var(--hand);color:#3a2b22}
+.pol:nth-child(1){transform:rotate(-3deg)}.pol:nth-child(2){transform:rotate(2.5deg)}
+.pol.t1{transform:rotate(2deg)}.pol.t2{transform:rotate(-2.5deg)}.pol.t3{transform:rotate(3deg)}.pol.t4{transform:rotate(-1.5deg)}
+.big{grid-column:1/3;display:grid;place-items:center;text-align:center}
+.big h2{font:900 3em/.95 var(--serif);color:var(--red);letter-spacing:-.01em}
+.big h2 i{display:block;font:400 .5em/1 var(--script);color:var(--ink);margin-top:.2em}
+.big h3{font:400 2.1em/1.02 var(--block);letter-spacing:.03em;color:#111;text-transform:uppercase}
+.big h3 b{color:var(--red);font-weight:400}
+
+/* ---------- BACK COVER ---------- */
+.bcover {
+    background: linear-gradient(180deg, #fff0f5, #fce4ec);
+    color: #ad6a80;
+}
+.bcover .portrait {
+position: absolute;
+left: 1.9em;
+right: 1.9em;
+top: 1.8em;
+height: 29em;
+border-radius: .4em;
+border: .12em solid rgba(246,224,170,.5);
+box-shadow: 0 .4em 1.2em rgba(0,0,0,.6);
+}
+.bcover .portrait .ph{position:absolute;inset:0}
+.bcover .foot{position:absolute;left:1.8em;right:1.8em;bottom:1.8em;display:flex;justify-content:space-between;align-items:flex-end}
+.bcover .brand b{display:block;font:500 1.55em/1 var(--serif);letter-spacing:.01em}
+.bcover .brand span{display:block;font:500 .8em/1 var(--serif);letter-spacing:.32em;margin:.45em 0 1em}
+.bcover .soc{display:flex;flex-direction:column;gap:.5em;font:500 .78em/1 var(--serif);letter-spacing:.04em}
+.bcover .soc div{display:flex;align-items:center;gap:.6em}
+.bcover .soc svg{width:1.5em;height:1.5em;flex:none}
+.qr{text-align:center;width:6.4em}
+.qr svg{display:block;width:6.4em;height:6.4em;background:#fff;padding:.4em;border-radius:.25em}
+.qr small{display:block;font:500 .62em/1.25 var(--serif);margin-top:.5em;letter-spacing:.03em}
+
+/* ---------- UI ---------- */
+.ui{position:fixed;left:0;right:0;bottom:1.6vh;display:flex;flex-direction:column;align-items:center;gap:.7em;z-index:20;pointer-events:none;color:#f1e2c0;font-family:var(--serif)}
+.ui *{pointer-events:auto}
+.nav{display:flex;align-items:center;gap:.6em;background:rgba(18,10,6,.62);backdrop-filter:blur(8px);padding:.45em .6em;border-radius:3em;border:1px solid rgba(246,224,170,.25)}
+.nav button{font:500 .85rem/1 var(--serif);color:#f1e2c0;background:none;border:0;padding:.65em 1em;border-radius:2em;cursor:pointer;transition:background .2s}
+.nav button:hover{background:rgba(246,224,170,.15)}
+.nav button.on{background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#2a1a0c;font-weight:700}
+.nav button:focus-visible,.ph:focus-visible{outline:2px solid var(--gold1);outline-offset:2px}
+.nav .arrow{font-size:1.2rem;padding:.4em .8em}
+.tip{font:italic 500 .85rem/1.2 var(--serif);opacity:.8;text-shadow:0 1px 4px #000;text-align:center;padding:0 1em}
+@media (max-width:640px){.nav button:not(.arrow){padding:.6em .55em;font-size:.72rem}.tip{font-size:.75rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Hide all photo upload hints */
+.ph .hint {
+  display: none !important;
+}
+
+.ph {
+  cursor: default !important;
+}
+
+/* Custom Front Cover Photo */
+.cover .photo {
+    position: absolute;
+    inset: 0;
+    background-image: url("./cover.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.cover .photo .ph {
+    display: none !important;
+}
+
+/* Custom Who's That Girl Photo */
+.who .frame {
+background: url("./girl.jpg") center center / cover no-repeat !important;
+}
+
+.who .frame .ph {
+display: none !important;
+}
+
+.who .fav {
+    color: #fff !important;
+}
+
+/* Custom Me & Panda Photo */
+.ten .polaroid .ph {
+    background: url("./panda.jpg") center center / cover no-repeat !important;
+}
+
+.ten .polaroid .ph svg,
+.ten .polaroid .ph .hint,
+.ten .polaroid .ph .cap {
+    display: none !important;
+}
+
+/* Holding Hands — change this photo only */
+.face.back.cream .pol.t1 .ph {
+    background: url("./holding.jpg") center center / cover no-repeat !important;
+}
+
+.face.back.cream .pol.t1 .ph svg,
+.face.back.cream .pol.t1 .ph .hint,
+.face.back.cream .pol.t1 .ph .cap {
+    display: none !important;
+}
+
+/* Somewhere Between Classes & Love — Photo */
+.face.back.cream .pol.t2 .ph {
+    background: url("./classes.jpg") center center / cover no-repeat !important;
+}
+
+.face.back.cream .pol.t2 .ph svg,
+.face.back.cream .pol.t2 .ph .hint,
+.face.back.cream .pol.t2 .ph .cap {
+    display: none !important;
+}
+
+/* Golden Hour — Photo */
+.face.back.cream .pol.t3 .ph {
+    background: url("./golden-hour.jpg") center center / cover no-repeat !important;
+}
+
+.face.back.cream .pol.t3 .ph svg,
+.face.back.cream .pol.t3 .ph .hint,
+.face.back.cream .pol.t3 .ph .cap {
+    display: none !important;
+}
+
+/* Dancing in the Rain — Photo */
+.face.back.cream .pol.t4 .ph {
+    background: url("./dancing-in-the-rain.jpg") center center / cover no-repeat !important;
+}
+
+.face.back.cream .pol.t4 .ph svg,
+.face.back.cream .pol.t4 .ph .hint,
+.face.back.cream .pol.t4 .ph .cap {
+    display: none !important;
+}
+
+/* Dates — Photo */
+.face.front.cream .pol.t2 .ph {
+    background: url("./dates.jpg") center center / cover no-repeat !important;
+}
+
+.face.front.cream .pol.t2 .ph svg,
+.face.front.cream .pol.t2 .ph .hint,
+.face.front.cream .pol.t2 .ph .cap {
+    display: none !important;
+}
+
+/* Selfies — Photo */
+.face.front.cream .pol.t1 .ph {
+background: url("./selfie.jpg") center center / cover no-repeat !important;
+}
+
+.face.front.cream .pol.t1 .ph svg,
+.face.front.cream .pol.t1 .ph .hint,
+.face.front.cream .pol.t1 .ph .cap {
+display: none !important;
+}
+
+/* Just Us — Photo */
+.face.front.cream .pol.t4 .ph {
+background: url("./just.jpg") center center / cover no-repeat !important;
+}
+
+.face.front.cream .pol.t4 .ph svg,
+.face.front.cream .pol.t4 .ph .hint,
+.face.front.cream .pol.t4 .ph .cap {
+display: none !important;
+}
+
+/* Moment — Photo */
+.face.front.cream .pol.t3 .ph {
+background: url("./moment.jpg") center center / cover no-repeat !important;
+}
+
+.face.front.cream .pol.t3 .ph svg,
+.face.front.cream .pol.t3 .ph .hint,
+.face.front.cream .pol.t3 .ph .cap {
+display: none !important;
+}
+
+/* Last Page Photo */
+.bcover .portrait {
+    background-image: url("./last.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bcover .portrait .ph {
+    display: none !important;
+}
+
+/* ========== PASSWORD ENTRY SCREEN ========== */
+.password-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top, rgba(180, 70, 90, .2), transparent 55%),
+        linear-gradient(135deg, #1b0d0b, #3b1d19);
+    transition: opacity .5s ease, visibility .5s ease;
+}
+
+.password-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.password-card {
+    width: min(100%, 360px);
+    padding: 38px 28px;
+    text-align: center;
+    color: #f8e8d0;
+    background: rgba(255, 245, 235, .07);
+    border: 1px solid rgba(246, 224, 170, .4);
+    border-radius: 20px;
+    box-shadow: 0 15px 60px rgba(0, 0, 0, .4);
+    backdrop-filter: blur(12px);
+}
+
+.password-card .heart {
+    font-size: 35px;
+    margin-bottom: 14px;
+}
+
+.password-card h2 {
+    font: 500 32px/1.2 var(--serif);
+    color: var(--gold1);
+    margin-bottom: 12px;
+}
+
+.password-card p {
+    font: 500 15px/1.6 var(--serif);
+    color: #e8d5c4;
+    margin-bottom: 24px;
+}
+
+.password-card input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid rgba(246, 224, 170, .5);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(0, 0, 0, .25);
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 14px;
+}
+
+.password-card input:focus {
+    border-color: var(--gold1);
+}
+
+.password-card button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold1), var(--gold2));
+    color: #2a1a0c;
+    font: 700 13px var(--serif);
+    letter-spacing: 1.5px;
+    cursor: pointer;
+}
+
+.password-card #passwordError {
+    min-height: 22px;
+    margin: 14px 0 0;
+    color: #ffb6c1;
+    font-size: 13px;
+}
+
+body.locked {
+    overflow: hidden;
+}
+
+</style>
+<script>
+/* PERF: build the paper-grain texture once as a small PNG tile.
+   The original used a live feTurbulence SVG filter, which is costly to rasterize and was being
+   repeated on every page face, every bending strip and the table. A decoded bitmap is shared and nearly free.
+   If canvas is unavailable the SVG fallback in :root keeps working. */
+(function(){
+  try{
+    var S=128,c=document.createElement('canvas');c.width=c.height=S;
+    var x=c.getContext('2d'),d=x.createImageData(S,S),p=d.data,s=1337;
+    function r(){s=(s*1664525+1013904223)>>>0;return s/4294967296;}
+    for(var i=0;i<p.length;i+=4){
+      var v=(r()+r()+r()+r())/4;          /* soft, roughly bell-shaped grain (mean .5) */
+      p[i]=77;p[i+1]=51;p[i+2]=26;        /* same warm brown as the original colour matrix */
+      p[i+3]=Math.round(v*97);            /* .38 max alpha like the original */
+    }
+    x.putImageData(d,0,0);
+    document.documentElement.style.setProperty('--noise','url('+c.toDataURL('image/png')+')');
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<!-- PASSWORD ENTRY SCREEN -->
+<div class="password-screen" id="passwordScreen">
+    <div class="password-card">
+        <div class="heart">🌳</div>
+
+        <h2>Shhhh...</h2>
+
+        <p>
+            Who are you?
+        </p>
+
+        <form id="passwordForm">
+            <input
+                type="password"
+                id="sitePassword"
+                placeholder="Enter the secret password"
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">UNLOCK ⚠️</button>
+
+            <p id="passwordError" aria-live="polite"></p>
+        </form>
+    </div>
+</div>
+
+<div class="table"></div>
+<div class="lamp" aria-hidden="true"><i class="shade"></i><i class="neck"></i><i class="base"></i></div>
+
+<div class="stage" id="stage" aria-label="Interactive 3D magazine">
+  <div class="book" id="book"><div class="bookshadow"></div></div>
+</div>
+
+<div class="ui" style="display:none;">
+  <div class="tip" id="tip"></div>
+  <div class="nav" id="nav"></div>
+</div>
+
+
+<script>
+/* ============ Edit your story here ============ */
+const C = {
+  her: 'Nezam', him: 'Badhon',
+  letter: [
+    "From the first hello, you made the world a little softer. You turned late-night talks into my favourite habit and a cup of coffee into a tiny holiday.",
+    "Thank you for the patience, the laughter, and for staying on the days I was hard to love.",
+    "Whatever tomorrow brings, I'll be right here, holding your hand, saving you the last bite, and loving you a little more each day."
+  ],
+  things: [
+    "I love the way you make even ordinary days feel special.",
+    "I love your laugh. It fixes my worst mornings.",
+    "I love how you remember the small things I forgot I said.",
+    "I love the way you hold my hand without even thinking.",
+    "I love that home feels like wherever you are.",
+    "I love how loudly you cheer for my smallest wins.",
+    "I love your terrible jokes, and that you tell them anyway.",
+    "I love the quiet we share when nobody needs to talk.",
+    "I love how brave you are when you think no one is watching.",
+    "Most of all, I love you exactly as you are, today and always."
+  ],
+  handle: '@anjali.karan'
+};
+
+/* ============ SVG art (placeholders, replaced when you add a photo) ============ */
+const ART = {
+ couple:`<svg viewBox="0 0 100 133" preserveAspectRatio="xMidYMid slice"><path d="M4 133C6 92 22 74 40 74c18 0 30 18 32 59Z" fill="#120b08"/><circle cx="40" cy="52" r="12" fill="#150d09"/><path d="M27 48c2-14 24-18 27 0-6-6-18-8-27 0Z" fill="#0b0605"/><path d="M42 133c2-32 12-48 27-48s26 16 29 48Z" fill="#eae3d6"/><circle cx="68" cy="64" r="9.5" fill="#2a1710"/><path d="M58 60c0-12 18-14 21 0-3 8-4 16-6 24-8 0-14-4-15-24Z" fill="#1b0f0a"/></svg>`,
+ man:`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><path d="M10 100c2-26 16-34 40-34s38 8 40 34Z" fill="#2f5d84"/><circle cx="50" cy="42" r="15" fill="#c68a60"/><path d="M34 38c0-18 32-18 32 0-8-6-24-6-32 0Z" fill="#171010"/><rect x="36" y="40" width="12" height="7" rx="3" fill="#111"/><rect x="52" y="40" width="12" height="7" rx="3" fill="#111"/><circle cx="62" cy="28" r="4" fill="#fff"/><circle cx="62" cy="28" r="1.6" fill="#f2b84b"/></svg>`,
+ sunset:`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="50" cy="58" r="16" fill="#ffd77a"/><path d="M0 74h100v26H0Z" fill="#2a1a2e"/><path d="M38 100c0-14 4-22 8-22s5 8 5 22Zm14 0c0-12 3-20 8-20s5 8 5 22Z" fill="#120a14"/><circle cx="43" cy="68" r="3" fill="#120a14"/><circle cx="58" cy="70" r="3" fill="#120a14"/></svg>`,
+ door:`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><path d="M10 100V48L50 18l40 30v52Z" fill="#efe4cf"/><path d="M4 50L50 14l46 36" stroke="#8c4b32" stroke-width="7" fill="none"/><rect x="38" y="52" width="24" height="48" rx="2" fill="#f2b630"/><circle cx="57" cy="78" r="2" fill="#6b4b00"/></svg>`,
+ cup:`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><ellipse cx="50" cy="74" rx="30" ry="7" fill="#2b150a" opacity=".5"/><path d="M28 40h42v16a21 21 0 0 1-42 0Z" fill="#f4ece0"/><path d="M70 44h6a8 8 0 0 1 0 16h-8" stroke="#f4ece0" stroke-width="5" fill="none"/><ellipse cx="49" cy="40" rx="21" ry="4" fill="#4a2814"/><path d="M42 30c-4-6 4-8 0-14M54 30c-4-6 4-8 0-14" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/></svg>`,
+ heart:`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><path d="M50 74C22 54 26 30 40 30c6 0 10 4 10 8 0-4 4-8 10-8 14 0 18 24-10 44Z" fill="rgba(255,255,255,.85)"/></svg>`,
+ self:`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice"><circle cx="38" cy="46" r="13" fill="#4a2a1a"/><circle cx="64" cy="48" r="12" fill="#6b3c22"/><path d="M14 100c0-22 10-32 24-32s24 10 24 32Zm34 0c0-18 6-28 17-28s19 10 19 28Z" fill="#fff" opacity=".85"/></svg>`,
+ trad:`<svg viewBox="0 0 100 133" preserveAspectRatio="xMidYMid slice"><path d="M2 133c2-36 18-54 38-54s34 18 36 54Z" fill="#7b1226"/><path d="M14 133c2-26 12-40 26-40" stroke="#f0c56a" stroke-width="3" fill="none"/><circle cx="40" cy="54" r="12" fill="#c68a60"/><path d="M27 50c0-18 26-18 26 0-6-5-20-5-26 0Z" fill="#150d09"/><path d="M52 133c0-30 10-50 24-50s22 20 22 50Z" fill="#e8c76a"/><circle cx="72" cy="62" r="10" fill="#b57a54"/><path d="M60 58c0-14 24-14 24 2 0 10 2 24-4 34-10-4-20-4-20-36Z" fill="#150d09"/><circle cx="72" cy="64" r="9" fill="#b57a54"/></svg>`
+};
+const BOW=`<svg class="bow" viewBox="0 0 100 70"><path d="M50 32C34 6 6 4 6 22s28 18 44 10Z" fill="#7c0a16" stroke="#5a0610" stroke-width="1.5"/><path d="M50 32C66 6 94 4 94 22S66 40 50 32Z" fill="#8f0c1a" stroke="#5a0610" stroke-width="1.5"/><path d="M46 36L26 66l14-4 6 6 6-28Z" fill="#6c0813"/><path d="M54 36l20 30-14-4-6 6-6-28Z" fill="#7c0a16"/><rect x="42" y="24" width="16" height="16" rx="5" fill="#a3101f" stroke="#5a0610" stroke-width="1.5"/><path d="M14 20c10-6 22-4 30 6" stroke="#d6414f" stroke-width="2" fill="none" opacity=".7"/></svg>`;
+const ENV=`<svg class="env" viewBox="0 0 60 44"><rect x="1" y="1" width="58" height="42" rx="3" fill="#f6e9cc" stroke="#c19a5c" stroke-width="1.5"/><path d="M2 3l28 22L58 3" fill="none" stroke="#c19a5c" stroke-width="1.5"/><path d="M30 33c-8-6-9-11-5-11 2 0 4 1 5 3 1-2 3-3 5-3 4 0 3 5-5 11Z" fill="#b3121f"/></svg>`;
+const IG=`<svg viewBox="0 0 24 24" fill="none" stroke="#f1e2c0" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1" fill="#f1e2c0" stroke="none"/></svg>`;
+const FB=`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#f1e2c0" stroke-width="1.8"/><path d="M13.2 20v-7h2.4l.4-2.8h-2.8V8.6c0-.8.3-1.3 1.4-1.3H16V4.8c-.3 0-1.1-.1-2-.1-2.1 0-3.5 1.3-3.5 3.6v1.9H8.2V13h2.3v7Z" fill="#f1e2c0"/></svg>`;
+
+function qr(){ // decorative placeholder QR — swap for a real one later
+  const n=25; let s=7, r=()=> (s=(s*1103515245+12345)&0x7fffffff)/0x7fffffff, out='';
+  const finder=(x,y)=>x<8&&y<8||x>n-9&&y<8||x<8&&y>n-9;
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){
+    let on;
+    if(finder(x,y)){const fx=x>n-9?x-(n-7):x, fy=y>n-9?y-(n-7):y; on=(fx===0||fx===6||fy===0||fy===6||(fx>=2&&fx<=4&&fy>=2&&fy<=4))&&fx<=6&&fy<=6&&fx>=0&&fy>=0;}
+    else on=r()>.52;
+    if(on) out+=`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`;
+  }
+  return `<svg viewBox="0 0 ${n} ${n}" fill="#14100d" shape-rendering="crispEdges">${out}</svg>`;
+}
+const ph=(art,extra='',cap='',label='+ add photo')=>`<div class="ph art-${art} ${extra}" data-art="${art}" tabindex="0" role="button" aria-label="Add photo">${ART[art]||''}${cap?`<div class="cap">${cap}</div>`:''}<span class="hint">${label}</span></div>`;
+
+/* ============ Pages ============ */
+const pCover=`<div class="face front cover">
+
+  <div class="photo"></div>
+  <h1 class="gold">LOVE STORY</h1><div class="mag gold">MAGAZINE</div>
+  <div class="lines"><p>You're my today, tomorrow,  forever</p> I <p> 🐼 </p>‎‎‎‎ YOU  <p>  </p>  </div>
+  <div class="feat"><small>Featuring</small><b class="gold">${C.her} &amp; ${C.him}</b></div>
+  <div class="dim"></div></div>`;
+
+const pWho=`<div class="face back aged who pad">
+  <h2>Who's<span>that Girl?</span></h2>
+  <div class="frame"><span class="tape" style="left:-1.4em;top:-.5em;transform:rotate(-35deg)"></span>${ph('man','','','+ add his photo')}</div>
+  <div class="fav">my fav human.</div>
+  <div class="pg l">1</div><div class="dim"></div></div>`;
+
+const pLetter=`<div class="face front red">
+  <div class="letter">${BOW}${ENV}
+    <h3>DEAR ${C.him.toUpperCase()}</h3>
+    ${C.letter.map(t=>`<p>${t}</p>`).join('')}
+    <div class="sign">${C.her}</div>
+  </div>
+  <div class="pg r" style="color:#fff">2</div><div class="dim"></div></div>`;
+
+const li=(n,t)=>`<li class="${n===10?'last':''}"><span class="num">${n}</span><span>${t}</span></li>`;
+const pTen1=`<div class="face back redplain ten pad">
+  <div class="top">
+    <div class="polaroid"><span class="tape" style="left:35%;top:-.7em;transform:rotate(3deg)"></span>${ph('self','','','+ date photo')}<em> Me & Panda </em></div>
+    <h2>10 things I love about you</h2>
+  </div>
+  <ul class="items">${C.things.slice(0,4).map((t,i)=>li(i+1,t)).join('')}</ul>
+  <div class="pg l" style="color:#fff">3</div><div class="dim"></div></div>`;
+
+const pTen2=`<div class="face front redplain ten pad" style="padding-top:2.6em">
+  <ul class="items">${C.things.slice(4).map((t,i)=>li(i+5,t)).join('')}</ul>
+  <span class="tape" style="right:1.2em;top:.8em;transform:rotate(8deg)"></span>
+  <div class="pg r" style="color:#fff">4</div><div class="dim"></div></div>`;
+
+const pol=(art,cls,cap)=>`<div class="pol ${cls}">${ph(art,'','',' + photo')}<em>${cap}</em></div>`;
+const pCol1=`<div class="face back cream">
+  <div class="collage">
+    ${pol('heart','t1','holding hands')}${pol('heart','t2','Classes & Love')}
+    <div class="big"><h2>YOU &amp; ME<i>${C.her} + ${C.him}</i></h2></div>
+    ${pol('sunset','t3','golden hour')}${pol('door','t4','Dancing in the Rain')}
+  </div><div class="pg l">5</div><div class="dim"></div></div>`;
+const pCol2=`<div class="face front cream">
+  <div class="collage">
+    ${pol('cup','t2','Dates')}${pol('self','t1',' Selfies')}
+    <div class="big"><h3>Mine.<br>Yours. <b>Forever.</b></h3></div>
+    ${pol('self','t4','just us')}${pol('heart','t3',' moment')}
+  </div><div class="pg r">6</div><div class="dim"></div></div>`;
+
+const pBack=`<div class="face back bcover">
+
+  <div class="portrait">${ph('trad','','','+ add portrait')}</div>
+  <div class="dim"></div>
+</div>`;
+
+const leaves=[[pCover,pWho],[pLetter,pTen1],[pTen2,pCol1],[pCol2,pBack]];
+const N=leaves.length;
+const book=document.getElementById('book');
+const root=document.documentElement;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const els=leaves.map(([f,b])=>{const d=document.createElement('div');d.className='leaf';d.innerHTML=f+b;book.appendChild(d);return d;});
+
+/* Per-leaf state (cached so we never query the DOM inside the animation loop) */
+const S=els.map((el,i)=>({el,i,segs:null,strips:null,bending:false,tf:''}));
+
+/* Soft shadows cast by the turning page onto the page beneath it */
+const castR=document.createElement('div'); castR.className='cast r';
+const castL=document.createElement('div'); castL.className='cast l';
+book.appendChild(castR); book.appendChild(castL);
+const cast={r:{el:castR,on:false,tf:'',op:-1},l:{el:castL,on:false,tf:'',op:-1}};
+
+/* ============ Adaptive quality ============
+   TIER 2 = full (desktop)         : 14 strips, grain + highlight + shadow on strips
+   TIER 1 = medium (modern phones) : 10 strips
+   TIER 0 = light  (low-end phones): 7 strips, no grain / highlight on the bending strips
+   The tier starts from device hints and automatically steps down if page turns measure slow. */
+const coarse=matchMedia('(pointer:coarse)').matches;
+const mem=navigator.deviceMemory||4, cores=navigator.hardwareConcurrency||4;
+let TIER=coarse?((mem<=3||cores<=4)?0:1):2;
+const NS_BY_TIER=[7,10,14];
+let NS=14, WN=[];
+const MAXC=62;            // peak total bend in degrees (reached at mid-turn)
+const D2R=Math.PI/180;
+const BF0=Math.cos(28*D2R); // brightness of a flat page, so shading has no pop when strips swap in
+
+function applyTier(t){
+  TIER=t; NS=NS_BY_TIER[t];
+  /* Curl profile: outer strips bend more than strips near the spine (normalised weights) */
+  let tot=0; const a=[];
+  for(let k=0;k<NS;k++){const w=.55+1.2*k/(NS-1);a.push(w);tot+=w;}
+  WN=a.map(w=>w/tot);
+  book.style.setProperty('--n',NS);
+  root.classList.toggle('nn',t===0);
+  for(const s of S) if(!s.bending) disposeStrips(s);   // strips are rebuilt lazily with the new segment count
+}
+
+/* ============ Page-bend geometry ============
+   Each leaf gets a second, hidden representation: NS nested vertical strips.
+   Strip k is hinged at the right edge of strip k-1, so giving every strip its own
+   small rotateY produces a genuinely curved sheet (a polyline approximating a smooth curve),
+   with both faces visible and correctly mirrored. It is only painted while a page is mid-turn;
+   at rest the original flat faces are used.
+   PERF: the page clone is prepared ONCE per face (hidden placeholder art/hints removed, interactive
+   attributes stripped) and then cloned per strip; strips are built only for the two leaves that can
+   turn next and freed again for leaves that are far away. */
+function prep(face){
+  const c=face.cloneNode(true);
+  c.querySelectorAll('.dim').forEach(n=>n.remove());
+  /* drop nodes that the page CSS already hides (placeholder art, hints) — they only cost memory in 28 clones */
+  const sel='.ph,.ph>svg,.ph>.cap,.ph>.hint';
+  const o=face.querySelectorAll(sel), k=c.querySelectorAll(sel);
+  for(let i=0;i<o.length;i++){ if(getComputedStyle(o[i]).display==='none') k[i].remove(); }
+  c.querySelectorAll('[tabindex]').forEach(n=>n.removeAttribute('tabindex'));
+  c.querySelectorAll('[role]').forEach(n=>n.removeAttribute('role'));
+  c.querySelectorAll('[aria-label]').forEach(n=>n.removeAttribute('aria-label'));
+  c.setAttribute('aria-hidden','true');
+  return c;
+}
+function layer(tpl,back){
+  const lay=document.createElement('div'); lay.className='lay'+(back?' b':'');
+  const sh=document.createElement('div'); sh.className='sh';
+  lay.append(tpl.cloneNode(true),sh);
+  let hl=null;
+  if(TIER===2){ hl=document.createElement('div'); hl.className='hl'; lay.appendChild(hl); }
+  return {lay,sh,hl};
+}
+function buildStrips(s){
+  if(s.segs) return;
+  const tf=prep(s.el.children[0]), tb=prep(s.el.children[1]);
+  const strips=document.createElement('div'); strips.className='strips';
+  const segs=[]; let parent=strips;
+  for(let k=0;k<NS;k++){
+    const seg=document.createElement('div'); seg.className='seg';
+    seg.style.setProperty('--i',k); seg.style.setProperty('--j',NS-1-k);
+    const f=layer(tf,false), b=layer(tb,true);
+    seg.append(f.lay,b.lay);
+    parent.appendChild(seg); parent=seg;
+    segs.push({seg,fs:f.sh,fh:f.hl,bs:b.sh,bh:b.hl,rel:1e9,o1:-1,o2:-1,o3:-1,o4:-1});
+  }
+  s.el.appendChild(strips);
+  s.strips=strips; s.segs=segs;
+}
+function disposeStrips(s){
+  if(!s.segs||s.bending) return;
+  s.strips.remove(); s.strips=null; s.segs=null;
+}
+
+/* Build strips during idle time so the first turn never hitches.
+   Only the leaf that turns forward from the current page (k) and the one that turns back (k-1) are kept ready. */
+const idle=window.requestIdleCallback?(f=>requestIdleCallback(f,{timeout:1500})):(f=>setTimeout(f,120));
+let preQueued=false;
+function prebuild(){
+  if(preQueued) return;
+  preQueued=true;
+  idle(()=>{
+    preQueued=false;
+    if(down||gliding) return;                 // settle() will call us again
+    const k=Math.round(target);
+    const need=[k,k-1].find(i=>i>=0&&i<N&&!S[i].segs);
+    if(need===undefined) return;
+    buildStrips(S[need]);
+    prebuild();                               // next one in a separate idle slice
+  });
+}
+function trim(){
+  const k=Math.round(target);
+  for(const s of S) if(s.segs&&!s.bending&&s.i!==k&&s.i!==k-1) disposeStrips(s);
+}
+
+/* ============ Page-bend rendering ============ */
+function setOp(el,obj,key,v){ if(Math.abs(obj[key]-v)>.006){obj[key]=v;el.style.opacity=v.toFixed(3);} }
+
+function bendLeaf(s,p){
+  if(!s.segs) buildStrips(s);
+  const segs=s.segs;
+  const amp=Math.sin(p*Math.PI)*flex*MAXC*dirS;   // total bend (deg), largest mid-turn, 0 at both ends
+  let prev=-180*p, cum=prev+amp*.5, edge=0;
+  for(let k=0;k<NS;k++){
+    const g=segs[k];
+    cum-=amp*WN[k];
+    const c=cum<-180?-180:cum>0?0:cum;            // never push through the pages beneath
+    const rel=c-prev; prev=c;
+    if(Math.abs(rel-g.rel)>.01){ g.rel=rel; g.seg.style.transform='rotateY('+rel.toFixed(2)+'deg)'; }
+    edge+=Math.cos(c*D2R);
+    if(c>-90){ // front face visible
+      const bF=Math.cos((c+28)*D2R);
+      setOp(g.fs,g,'o1',clamp((BF0-bF)*.9,0,.5));
+      if(g.fh) setOp(g.fh,g,'o2',clamp((bF-BF0)*1.4,0,.2));
+    }else{     // back face visible
+      const bB=Math.cos((c+152)*D2R);
+      setOp(g.bs,g,'o3',clamp((BF0-bB)*.9,0,.5));
+      if(g.bh) setOp(g.bh,g,'o4',clamp((bB-BF0)*1.4,0,.2));
+    }
+  }
+  return edge/NS*W; // projected x of the free edge, relative to the spine
+}
+
+function castShadow(i,p,edgeX){
+  const side=edgeX>=0?'r':'l', other=side==='r'?'l':'r';
+  const ok = side==='r' ? i<N-1 : i>0;
+  const a=cast[side], b=cast[other];
+  if(b.on){b.on=false;b.el.style.display='none';}
+  if(!ok){ if(a.on){a.on=false;a.el.style.display='none';} return; }
+  if(!a.on){a.on=true;a.el.style.display='block';a.op=-1;a.tf='';}
+  const z=side==='r' ? (N-i-1)*1.2+.6 : (i-1)*1.2+.6;
+  const sc=clamp(Math.abs(edgeX)/W+.12,.18,1);
+  const tf='translateZ('+z.toFixed(2)+'px) scaleX('+sc.toFixed(3)+')';
+  if(tf!==a.tf){a.tf=tf;a.el.style.transform=tf;}
+  const op=clamp(.55*Math.pow(Math.sin(p*Math.PI),.7)*Math.min(1,Math.abs(edgeX)/(W*.25)+.35),0,.6);
+  if(Math.abs(op-a.op)>.004){a.op=op;a.el.style.opacity=op.toFixed(3);}
+}
+function hideCast(){
+  for(const k in cast){ const c=cast[k]; if(c.on){c.on=false;c.el.style.display='none';} }
+}
+
+/* ============ Flip engine ============ */
+const stage=document.getElementById('stage');
+let pos=0,target=0,vel=0,W=0,gliding=false,down=false;
+let pending=0,lastTs=0,lastPos=0,dirT=1,dirS=1,speedS=0,flex=.55;
+let lastBook='',pbtns=[],lastIdx=-1,bendN=0;
+let turnFrames=0,meas=0,slow=0;
+const EPS=.0006;
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+
+applyTier(TIER);
+
+function size(){
+  const vw=window.innerWidth, vh=window.innerHeight;
+  const nw=Math.floor(Math.min(vw*0.46,vh*0.75,850));
+  if(nw===W) return;                                   // nothing changed: no style recalculation
+  W=nw;
+  book.style.setProperty('--w',W+'px');
+  render();
+}
+
+function render(){
+  const t0=clamp(pos,0,1), t1=clamp(pos-(N-1),0,1);
+  const shift=(-(1-t0)+t1)*W/2;
+  const bt='translateX('+shift.toFixed(2)+'px) rotateX('+(reduce?0:12)+'deg)';
+  if(bt!==lastBook){lastBook=bt;book.style.transform=bt;}
+
+  let castDone=false; bendN=0;
+  for(let i=0;i<N;i++){
+    const s=S[i], p=clamp(pos-i,0,1);
+    const z=(p>.5?i:(N-i))*1.2;
+    const tf='translateZ('+z.toFixed(2)+'px) rotateY('+(-180*p).toFixed(3)+'deg)';
+    if(tf!==s.tf){s.tf=tf;s.el.style.transform=tf;}
+    const mid=!reduce&&p>EPS&&p<1-EPS;
+    if(mid){
+      const edgeX=bendLeaf(s,p);
+      if(!s.bending){s.bending=true;s.el.classList.add('bending');}
+      castShadow(i,p,edgeX); castDone=true; bendN++;
+    }else if(s.bending){
+      s.bending=false;s.el.classList.remove('bending');
+    }
+  }
+  if(!castDone) hideCast();
+
+  const idx=Math.round(pos);
+  if(idx!==lastIdx){lastIdx=idx;pbtns.forEach((b,i)=>b.classList.toggle('on',i===idx));}
+}
+
+/* Called once when a glide has fully come to rest: free memory, prepare neighbours, adapt quality */
+function settle(){
+  speedS=0;
+  if(TIER>0&&meas>=10&&slow/meas>.3) applyTier(TIER-1);   // turns were janky: use a lighter page bend
+  meas=slow=turnFrames=0;
+  trim();
+  prebuild();
+}
+
+/* One rAF loop that only runs while something is moving */
+function schedule(){ if(!pending) pending=requestAnimationFrame(tick); }
+function tick(ts){
+  pending=0;
+  const raw=lastTs?(ts-lastTs)/1000:1/60;
+  const fresh=lastTs&&raw<.1;                    // a long gap means we were idle: treat as one normal frame
+  let dt=fresh?raw:1/60; lastTs=ts;
+  dt=clamp(dt,.001,.034);
+  let done=false;
+  if(gliding){
+    const w=11; // critically damped spring: eases in, eases out, keeps drag-release momentum
+    vel+=((target-pos)*w*w-2*w*vel)*dt;
+    pos=clamp(pos+vel*dt,0,N);
+    if(Math.abs(target-pos)<.0007&&Math.abs(vel)<.02){pos=target;vel=0;gliding=false;done=true;}
+  }
+  const dp=pos-lastPos; lastPos=pos;
+  if(Math.abs(dp)>1e-5) dirT=dp>0?1:-1;
+  speedS+=(Math.abs(dp)/dt-speedS)*Math.min(1,dt*12);
+  dirS+=(dirT-dirS)*Math.min(1,dt*9);
+  flex=.55+.45*clamp(speedS/2.2,0,1);
+  render();
+  if(bendN){                                      // frame-time sampling while pages are bending (skip first frames: raster warm-up)
+    if(++turnFrames>3&&fresh&&raw<.25){ meas++; if(raw>.034) slow++; }
+  }else turnFrames=0;
+  if(gliding) schedule();
+  else if(done) settle();
+}
+function go(t){
+  target=clamp(Math.round(t),0,N);
+  if(reduce){pos=target;vel=0;gliding=false;render();settle();return;}
+  if(Math.abs(target-pos)<EPS&&Math.abs(vel)<.02){   // already there: no animation loop at all
+    if(pos!==target){pos=target;render();}
+    vel=0;gliding=false;
+    return;
+  }
+  gliding=true; schedule();
+}
+
+/* ============ Pointer / touch ============ */
+let moved=false, sx=0, sy=0, sp=0, activePointer=null, suppressClick=false;
+const ptrs=new Set(); let samples=[];
+
+stage.addEventListener('pointerdown',e=>{
+  ptrs.add(e.pointerId);
+  if(ptrs.size>1){ if(down) endDrag(null,true); return; }          // pinch-zoom: never turn a page
+  if(e.button!==undefined&&e.button!==0) return;
+  const r=book.getBoundingClientRect();
+  if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom) return; // only inside the magazine
+  down=true; moved=false; activePointer=e.pointerId;
+  sx=e.clientX; sy=e.clientY;
+  gliding=false; vel=0; target=pos; sp=pos; samples.length=0;
+  stage.classList.add('drag');
+  try{stage.setPointerCapture(e.pointerId);}catch(_){}
+});
+
+stage.addEventListener('pointermove',e=>{
+  if(!down||e.pointerId!==activePointer) return;
+  const dx=e.clientX-sx;
+  if(!moved){
+    const dy=e.clientY-sy;
+    if(Math.abs(dx)<6&&Math.abs(dy)<6) return;
+    if(Math.abs(dy)>Math.abs(dx)*1.2){ endDrag(e,true); return; }  // vertical scroll intent
+    moved=true; sx=e.clientX;                                       // start from here: no jump
+    sp=pos;
+  }
+  pos=clamp(sp-(e.clientX-sx)/(W*.85),0,N);
+  const t=e.timeStamp; samples.push({t,pos});
+  while(samples.length>2&&t-samples[0].t>110) samples.shift();
+  schedule();                                                       // one render per frame, however many move events arrive
+});
+
+function endDrag(e,cancelled){
+  if(!down) return;
+  if(e&&e.pointerId!==activePointer) return;
+  down=false; activePointer=null;
+  stage.classList.remove('drag');
+  const base=Math.round(sp);
+  if(!moved||cancelled){ moved=false; go(base); return; }
+  suppressClick=true; setTimeout(()=>{suppressClick=false;},60);
+  moved=false;
+  let v=0;
+  if(samples.length>1){const a=samples[0],b=samples[samples.length-1]; if(b.t>a.t) v=(b.pos-a.pos)/((b.t-a.t)/1000);}
+  const dist=pos-sp;
+  let next=base;
+  if(Math.abs(v)>.9) next=v>0?base+1:base-1;       // flick
+  else if(dist>.12) next=base+1;
+  else if(dist<-.12) next=base-1;
+  next=clamp(next,0,N);
+  vel=(next-base===Math.sign(v))?clamp(v,-6,6):0;
+  go(next);
+}
+stage.addEventListener('pointerup',e=>{ptrs.delete(e.pointerId);endDrag(e,false);});
+stage.addEventListener('pointercancel',e=>{ptrs.delete(e.pointerId);endDrag(e,true);});
+stage.addEventListener('lostpointercapture',e=>{ptrs.delete(e.pointerId);});
+addEventListener('blur',()=>{ptrs.clear(); if(down) endDrag(null,true);});
+
+document.addEventListener('click',e=>{
+  if(suppressClick){e.preventDefault();e.stopPropagation();}
+},true);
+
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') go(Math.round(target)+1);
+  if(e.key==='ArrowLeft') go(Math.round(target)-1);
+});
+
+let wheelLock=0;
+addEventListener('wheel',e=>{
+  if(Math.abs(e.deltaX)>Math.abs(e.deltaY)&&Math.abs(e.deltaX)>30){
+    const n=performance.now(); if(n<wheelLock) return;   // trackpads fire dozens of events per swipe
+    wheelLock=n+450;
+    go(Math.round(target)+(e.deltaX>0?1:-1));
+  }
+},{passive:true});
+
+/* ============ Nav ============ */
+const nav=document.getElementById('nav');
+const labels=['Cover','Letter','10 Things','Memories','Back'];
+nav.innerHTML=`<button class="arrow" aria-label="Previous page">‹</button>`+labels.map((l,i)=>`<button class="pbtn" data-i="${i}">${l}</button>`).join('')+`<button class="arrow" aria-label="Next page">›</button>`;
+pbtns=[...nav.querySelectorAll('.pbtn')];
+nav.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.classList.contains('pbtn')) go(+b.dataset.i);
+  else if(b.getAttribute('aria-label')==='Next page') go(Math.round(target)+1);
+  else go(Math.round(target)-1);
+});
+
+let rs=0;
+addEventListener('resize',()=>{ if(rs) return; rs=requestAnimationFrame(()=>{rs=0;size();}); });
+size();
+
+/* subtle intro: cover rocks open a crack, then settles.
+   It waits until fonts are ready and the cover's page-bend strips are built, so it never hitches. */
+const fontsReady=(document.fonts&&document.fonts.ready)?document.fonts.ready:Promise.resolve();
+const firstBuilt=new Promise(res=>fontsReady.then(()=>idle(()=>{ if(!reduce) buildStrips(S[0]); res(); })));
+const minDelay=new Promise(res=>setTimeout(res,500));
+Promise.all([firstBuilt,minDelay]).then(()=>{
+  prebuild();
+  if(reduce||down||gliding||pos!==0) return;
+  pos=.06;lastPos=pos;render();
+  setTimeout(()=>{ if(down||pos!==.06) return; target=0;gliding=true;schedule(); },350);
+});
+</script>
+
+<script>
+(() => {
+    const PASSWORD = "BA-DON"; // নিজের পাসওয়ার্ড দাও
+
+    const screen = document.getElementById("passwordScreen");
+    const form = document.getElementById("passwordForm");
+    const input = document.getElementById("sitePassword");
+    const error = document.getElementById("passwordError");
+
+    document.body.classList.add("locked");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        if (input.value === PASSWORD) {
+            screen.classList.add("hidden");
+            document.body.classList.remove("locked");
+
+            setTimeout(() => {
+                screen.remove();
+            }, 550);
+        } else {
+            error.textContent = "Wrong password! Try again ♡";
+            input.value = "";
+            input.focus();
+        }
+    });
+})();
+</script>
+
+</body>
+</html>
